@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+
+  <title>Course</title>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="nav">
+      <a class="nav-link text-decoration-underline" th:href="@{/}">Courses</a>
+      <a class="nav-link text-decoration-underline" th:href="@{/students}">Students</a>
+    </nav>
+
+    <h1>Course: <span th:text="${course.courseName}"></span></h1>
+    <hr />
+    <div>
+      <h3>Students:</h3>
+      <ul th:each="student: ${course.students}">
+        <li>
+          <a th:href="@{/students/{id}(id=${student.studentId})}"><span th:text="${student.name}"></span></a>
+        </li>
+      </ul>
+    </div>
+    <hr />
+
+    <div>
+      <h3>Add an existing student to the course</h3>
+
+      <ul>
+        <li class="my-2" th:each="student: ${students}">
+          <form
+            th:action="@{/courses/{courseId}/students/{studentId}(courseId=${course.courseId},studentId=${student.studentId})}"
+            method="POST">
+            <span th:text="${student.name}"></span>
+            <button class="btn btn-dark btn-sm ms-2" type="submit">
+              Add
+            </button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>
